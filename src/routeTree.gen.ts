@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AppMappaRouteImport } from './routes/_app.mappa'
+import { Route as AppDiarioRouteImport } from './routes/_app.diario'
 import { Route as AppChatRouteImport } from './routes/_app.chat'
 
 const AppRoute = AppRouteImport.update({
@@ -28,6 +29,11 @@ const AppMappaRoute = AppMappaRouteImport.update({
   path: '/mappa',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDiarioRoute = AppDiarioRouteImport.update({
+  id: '/diario',
+  path: '/diario',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppChatRoute = AppChatRouteImport.update({
   id: '/chat',
   path: '/chat',
@@ -37,10 +43,12 @@ const AppChatRoute = AppChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/chat': typeof AppChatRoute
+  '/diario': typeof AppDiarioRoute
   '/mappa': typeof AppMappaRoute
 }
 export interface FileRoutesByTo {
   '/chat': typeof AppChatRoute
+  '/diario': typeof AppDiarioRoute
   '/mappa': typeof AppMappaRoute
   '/': typeof AppIndexRoute
 }
@@ -48,15 +56,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/_app/chat': typeof AppChatRoute
+  '/_app/diario': typeof AppDiarioRoute
   '/_app/mappa': typeof AppMappaRoute
   '/_app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/mappa'
+  fullPaths: '/' | '/chat' | '/diario' | '/mappa'
   fileRoutesByTo: FileRoutesByTo
-  to: '/chat' | '/mappa' | '/'
-  id: '__root__' | '/_app' | '/_app/chat' | '/_app/mappa' | '/_app/'
+  to: '/chat' | '/diario' | '/mappa' | '/'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_app/chat'
+    | '/_app/diario'
+    | '/_app/mappa'
+    | '/_app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -86,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMappaRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/diario': {
+      id: '/_app/diario'
+      path: '/diario'
+      fullPath: '/diario'
+      preLoaderRoute: typeof AppDiarioRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/chat': {
       id: '/_app/chat'
       path: '/chat'
@@ -98,12 +120,14 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppChatRoute: typeof AppChatRoute
+  AppDiarioRoute: typeof AppDiarioRoute
   AppMappaRoute: typeof AppMappaRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppChatRoute: AppChatRoute,
+  AppDiarioRoute: AppDiarioRoute,
   AppMappaRoute: AppMappaRoute,
   AppIndexRoute: AppIndexRoute,
 }
