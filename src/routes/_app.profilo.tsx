@@ -20,7 +20,7 @@ function ProfiloPage() {
             <div className="text-[11px] uppercase tracking-widest text-muted-foreground">Profilo</div>
             <h1 className="font-display text-4xl mt-1">Elena Marchetti</h1>
             <p className="text-muted-foreground mt-2 max-w-md leading-relaxed">
-              "Coltivo idee come si coltivano piante: con lentezza, e con la fiducia che fioriranno."
+              "Raccolgo pensieri che mi aiutano a capire chi sono, con calma e continuità."
             </p>
           </div>
           <button className="px-5 py-2.5 rounded-xl bg-card border border-border/60 text-sm hover:bg-muted transition">
@@ -122,7 +122,7 @@ function ProfiloPage() {
             { icon: Moon, title: "Modalità notte", desc: "Tonalità più calde dopo il tramonto." },
             { icon: Sparkles, title: "Voce di Synapse", desc: "Riflessiva · Calma · Curiosa" },
             { icon: Lock, title: "Privacy & cifratura", desc: "I tuoi pensieri restano tuoi, sempre." },
-            { icon: Download, title: "Esporta il tuo giardino", desc: "Scarica tutti i pensieri in Markdown." },
+            { icon: Download, title: "Esporta i tuoi pensieri", desc: "Scarica tutti i pensieri in Markdown." },
           ].map((r) => (
             <button key={r.title} className="w-full text-left flex items-center gap-4 px-5 py-4 hover:bg-muted/60 transition">
               <div className="size-10 rounded-xl bg-secondary grid place-items-center">

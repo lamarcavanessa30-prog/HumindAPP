@@ -41,7 +41,7 @@ function DiarioPage() {
         <div>
           <div className="text-[11px] uppercase tracking-widest text-muted-foreground">Diario</div>
           <h1 className="font-display text-4xl md:text-5xl mt-2">La cronaca dei tuoi pensieri</h1>
-          <p className="text-muted-foreground mt-2">142 pensieri · 47 giorni di pratica · 12 costellazioni attive</p>
+          <p className="text-muted-foreground mt-2">142 pensieri · 47 giorni di pratica · 12 temi attivi</p>
         </div>
         <div className="flex items-center gap-2">
           <div className="relative">
