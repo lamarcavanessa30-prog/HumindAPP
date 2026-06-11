@@ -11,7 +11,7 @@ const recent = [
   { tag: "Idea", text: "Progettare un rituale di scrittura serale, 7 minuti, senza schermo.", time: "Ieri", color: "bg-muted" },
 ];
 
-const constellations = [
+const activeThemes = [
   { name: "Architettura interiore", count: 24, hue: "from-sage to-sage-deep" },
   { name: "Letture lente", count: 17, hue: "from-dust to-sage" },
   { name: "Rituali quotidiani", count: 11, hue: "from-anthracite to-sage-deep" },
