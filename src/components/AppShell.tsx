@@ -60,7 +60,7 @@ export function AppShell() {
 
         <div className="mt-auto p-4 rounded-xl bg-secondary/60 border border-border/60">
           <div className="text-xs text-muted-foreground mb-1">Oggi</div>
-          <div className="font-display text-lg leading-snug">"Il pensiero diventa radice quando lo annaffi."</div>
+          <div className="font-display text-lg leading-snug">"Ogni pensiero conservato è un passo verso una comprensione più chiara."</div>
         </div>
       </aside>
 
