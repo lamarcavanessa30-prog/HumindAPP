@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Bell, Moon, Lock, Download, Sparkles, ChevronRight } from "lucide-react";
+import { Bell, Moon, Lock, Download, Sparkles, ChevronRight, Heart, Stethoscope, MessageCircle, BookMarked, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/_app/profilo")({
   component: ProfiloPage,
