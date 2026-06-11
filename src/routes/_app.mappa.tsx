@@ -127,7 +127,7 @@ function MapPage() {
           <div className="text-[11px] uppercase tracking-widest text-muted-foreground">Nodo selezionato</div>
           <div className="font-display text-2xl mt-1">{hover ? byId[hover].label : "Lentezza"}</div>
           <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
-            Un'idea che si è formata in 14 pensieri, collegata a 6 altre costellazioni. È fiorita ad aprile, dopo una lunga camminata.
+            Un tema che collega 14 pensieri e 6 altri argomenti. Si è definito ad aprile, dopo una lunga riflessione.
           </p>
           <div className="mt-4 pt-4 border-t border-border/60 flex justify-between text-xs text-muted-foreground">
             <span>14 nodi</span><span>6 connessioni</span><span>aprile 2026</span>
