@@ -26,25 +26,15 @@ const openQuestions = [
 function HomePage() {
   return (
     <div className="p-6 md:p-12 max-w-6xl mx-auto pb-32">
-      {/* Header */}
-      <header className="mb-10">
-        <div className="text-sm text-muted-foreground">Giovedì, 11 Giugno</div>
-        <h1 className="font-display text-4xl md:text-6xl mt-2 leading-[1.05]">
-          Buongiorno, Elena.
-        </h1>
-      </header>
-
       {/* Primary CTA */}
       <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-secondary via-card to-accent/30 p-8 md:p-12 mb-12 shadow-soft">
         <div className="absolute -top-24 -right-16 size-72 rounded-full bg-primary/10 blur-3xl" />
         <div className="absolute -bottom-24 -left-10 size-72 rounded-full bg-dust/30 blur-3xl" />
         <div className="relative max-w-2xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 text-[11px] uppercase tracking-widest text-muted-foreground mb-4">
-            <Sparkles className="size-3.5 text-primary" /> oggi
-          </div>
-          <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-foreground">
+          <div className="text-sm text-muted-foreground mb-4">Giovedì, 11 Giugno</div>
+          <h1 className="font-display text-3xl md:text-5xl leading-[1.05] text-foreground">
             Cosa ti passa per la testa oggi?
-          </h2>
+          </h1>
           <Link to="/chat" className="inline-block mt-4 text-xl md:text-2xl text-primary hover:opacity-80 transition">
             Parliamone.
           </Link>
