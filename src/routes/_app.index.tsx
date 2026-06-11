@@ -38,18 +38,17 @@ function HomePage() {
       <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-secondary via-card to-accent/30 p-8 md:p-12 mb-12 shadow-soft">
         <div className="absolute -top-24 -right-16 size-72 rounded-full bg-primary/10 blur-3xl" />
         <div className="absolute -bottom-24 -left-10 size-72 rounded-full bg-dust/30 blur-3xl" />
-        <div className="relative max-w-2xl">
-          <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-muted-foreground mb-4">
+        <div className="relative max-w-2xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-2 text-[11px] uppercase tracking-widest text-muted-foreground mb-4">
             <Sparkles className="size-3.5 text-primary" /> oggi
           </div>
-          <h2 className="font-display text-3xl md:text-5xl leading-[1.05] italic text-foreground">
+          <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-foreground">
             Cosa ti passa per la testa oggi?
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">Parliamone.</p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Link to="/chat" className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground shadow-float hover:opacity-90 transition">
-              <MessageCircle className="size-4" /> Inizia a parlarne
-            </Link>
+          <Link to="/chat" className="inline-block mt-4 text-xl md:text-2xl text-primary hover:opacity-80 transition">
+            Parliamone.
+          </Link>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
             <button className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-card border border-border/60 text-sm hover:bg-muted transition">
               Scrivi un pensiero
             </button>
