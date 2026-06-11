@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, BookOpen, MessageCircle, Network, Sparkles, TrendingUp } from "lucide-react";
+import { ArrowUpRight, BookOpen, MessageCircle, Network, Sparkles, HelpCircle } from "lucide-react";
 
 export const Route = createFileRoute("/_app/")({
   component: HomePage,
@@ -17,35 +17,82 @@ const constellations = [
   { name: "Rituali quotidiani", count: 11, hue: "from-anthracite to-sage-deep" },
 ];
 
+const openQuestions = [
+  { theme: "Solitudine", text: "Come cambia il tuo umore quando ti senti sola.", status: "in esplorazione" },
+  { theme: "Confini", text: "Cosa rende sostenibili i tuoi confini con gli altri.", status: "ipotesi aperta" },
+  { theme: "Energia", text: "Cosa ti aiuta davvero a recuperare energia, oltre il riposo.", status: "domanda viva" },
+];
+
 function HomePage() {
   return (
     <div className="p-6 md:p-12 max-w-6xl mx-auto pb-32">
       {/* Header */}
-      <header className="mb-12">
+      <header className="mb-10">
         <div className="text-sm text-muted-foreground">Giovedì, 11 Giugno</div>
         <h1 className="font-display text-4xl md:text-6xl mt-2 leading-[1.05]">
-          Buongiorno, Elena.<br />
-          <span className="text-primary italic">La tua mente</span> ha 142 connessioni.
+          Buongiorno, Elena.
         </h1>
-        <p className="mt-5 text-muted-foreground max-w-xl leading-relaxed">
-          Tre nuovi pensieri attendono di essere coltivati. La costellazione "Architettura interiore" è cresciuta di sei nodi questa settimana.
-        </p>
       </header>
 
-      {/* Stats */}
-      <section className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+      {/* Primary CTA */}
+      <section className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-secondary via-card to-accent/30 p-8 md:p-12 mb-12 shadow-soft">
+        <div className="absolute -top-24 -right-16 size-72 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -bottom-24 -left-10 size-72 rounded-full bg-dust/30 blur-3xl" />
+        <div className="relative max-w-2xl">
+          <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-muted-foreground mb-4">
+            <Sparkles className="size-3.5 text-primary" /> oggi
+          </div>
+          <h2 className="font-display text-3xl md:text-5xl leading-[1.05] italic text-foreground">
+            Cosa ti passa per la testa oggi?
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">Parliamone.</p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link to="/chat" className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground shadow-float hover:opacity-90 transition">
+              <MessageCircle className="size-4" /> Inizia a parlarne
+            </Link>
+            <button className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-card border border-border/60 text-sm hover:bg-muted transition">
+              Scrivi un pensiero
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Light stats — qualitative, no scores */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-12">
         {[
-          { k: "142", l: "pensieri", sub: "+8 questa sett." },
-          { k: "23", l: "costellazioni", sub: "3 in crescita" },
-          { k: "47", l: "giorni di pratica", sub: "serie attiva" },
-          { k: "9.2", l: "indice di chiarezza", sub: "↑ 0.4" },
+          { k: "142", l: "pensieri raccolti" },
+          { k: "23", l: "fili che si stanno intrecciando" },
+          { k: "47", l: "giorni in cui ci siamo parlate" },
         ].map((s) => (
           <div key={s.l} className="glass rounded-2xl p-5 shadow-soft">
             <div className="font-display text-3xl">{s.k}</div>
-            <div className="text-sm text-foreground/70 mt-1 capitalize">{s.l}</div>
-            <div className="text-[11px] text-muted-foreground mt-2 flex items-center gap-1"><TrendingUp className="size-3" />{s.sub}</div>
+            <div className="text-sm text-foreground/70 mt-1">{s.l}</div>
           </div>
         ))}
+      </section>
+
+      {/* Stiamo ancora cercando di capire */}
+      <section className="mb-12">
+        <div className="flex items-baseline justify-between mb-4">
+          <div>
+            <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">processo, non diagnosi</div>
+            <h2 className="font-display text-2xl md:text-3xl">Stiamo ancora cercando di capire</h2>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-3 gap-3">
+          {openQuestions.map((q) => (
+            <article key={q.text} className="group rounded-2xl p-5 bg-card border border-border/60 hover:border-primary/40 hover:shadow-soft transition">
+              <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-muted-foreground mb-3">
+                <HelpCircle className="size-3.5 text-primary" /> {q.theme}
+              </div>
+              <p className="font-display text-lg leading-snug text-foreground">{q.text}</p>
+              <div className="mt-4 text-[11px] text-muted-foreground italic">{q.status}</div>
+            </article>
+          ))}
+        </div>
+        <p className="text-xs text-muted-foreground mt-4 italic max-w-xl">
+          Non sono risposte. Sono domande che stiamo coltivando insieme, con il tempo che serve.
+        </p>
       </section>
 
       {/* Quick lanes */}
