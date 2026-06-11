@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
+import { Route as AppProfiloRouteImport } from './routes/_app.profilo'
 import { Route as AppMappaRouteImport } from './routes/_app.mappa'
 import { Route as AppDiarioRouteImport } from './routes/_app.diario'
 import { Route as AppChatRouteImport } from './routes/_app.chat'
@@ -22,6 +23,11 @@ const AppRoute = AppRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfiloRoute = AppProfiloRouteImport.update({
+  id: '/profilo',
+  path: '/profilo',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMappaRoute = AppMappaRouteImport.update({
@@ -45,11 +51,13 @@ export interface FileRoutesByFullPath {
   '/chat': typeof AppChatRoute
   '/diario': typeof AppDiarioRoute
   '/mappa': typeof AppMappaRoute
+  '/profilo': typeof AppProfiloRoute
 }
 export interface FileRoutesByTo {
   '/chat': typeof AppChatRoute
   '/diario': typeof AppDiarioRoute
   '/mappa': typeof AppMappaRoute
+  '/profilo': typeof AppProfiloRoute
   '/': typeof AppIndexRoute
 }
 export interface FileRoutesById {
@@ -58,19 +66,21 @@ export interface FileRoutesById {
   '/_app/chat': typeof AppChatRoute
   '/_app/diario': typeof AppDiarioRoute
   '/_app/mappa': typeof AppMappaRoute
+  '/_app/profilo': typeof AppProfiloRoute
   '/_app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/diario' | '/mappa'
+  fullPaths: '/' | '/chat' | '/diario' | '/mappa' | '/profilo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/chat' | '/diario' | '/mappa' | '/'
+  to: '/chat' | '/diario' | '/mappa' | '/profilo' | '/'
   id:
     | '__root__'
     | '/_app'
     | '/_app/chat'
     | '/_app/diario'
     | '/_app/mappa'
+    | '/_app/profilo'
     | '/_app/'
   fileRoutesById: FileRoutesById
 }
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profilo': {
+      id: '/_app/profilo'
+      path: '/profilo'
+      fullPath: '/profilo'
+      preLoaderRoute: typeof AppProfiloRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/mappa': {
@@ -122,6 +139,7 @@ interface AppRouteChildren {
   AppChatRoute: typeof AppChatRoute
   AppDiarioRoute: typeof AppDiarioRoute
   AppMappaRoute: typeof AppMappaRoute
+  AppProfiloRoute: typeof AppProfiloRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
@@ -129,6 +147,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppChatRoute: AppChatRoute,
   AppDiarioRoute: AppDiarioRoute,
   AppMappaRoute: AppMappaRoute,
+  AppProfiloRoute: AppProfiloRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
