@@ -1,5 +1,5 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Home, MessageCircle, Network, BookOpen, User, Plus, Sparkles, Search, LineChart } from "lucide-react";
+import { Home, MessageCircle, Network, BookOpen, User, Plus, Sparkles, Search, LineChart, BookMarked } from "lucide-react";
 import { useState } from "react";
 
 const nav = [
