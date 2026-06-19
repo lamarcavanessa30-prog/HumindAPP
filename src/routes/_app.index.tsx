@@ -65,16 +65,43 @@ function HomePage() {
         ))}
       </section>
 
-      {/* Stiamo ancora cercando di capire */}
+      {/* Domanda viva */}
+      <section className="mb-12">
+        <div className="mb-4">
+          <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">domanda viva</div>
+          <h2 className="font-display text-2xl md:text-3xl">Una domanda che emerge dalla tua storia</h2>
+        </div>
+        <article className="relative overflow-hidden rounded-3xl p-8 md:p-12 bg-gradient-to-br from-card via-secondary/40 to-accent/30 border border-border/60 shadow-soft">
+          <div className="absolute -top-20 -right-16 size-64 rounded-full bg-primary/10 blur-3xl" />
+          <div className="relative max-w-3xl">
+            <HelpCircle className="size-5 text-primary mb-5" />
+            <p className="font-display text-2xl md:text-4xl leading-snug text-foreground">
+              {livingQuestion.text}
+            </p>
+            <p className="mt-6 text-sm text-muted-foreground italic max-w-xl">
+              {livingQuestion.context}
+            </p>
+            <Link
+              to="/chat"
+              className="inline-flex items-center gap-2 mt-8 px-5 py-3 rounded-full bg-primary text-primary-foreground text-sm hover:opacity-90 transition"
+            >
+              Esplora questa domanda
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
+        </article>
+      </section>
+
+      {/* Domande emerse nel tempo */}
       <section className="mb-12">
         <div className="flex items-baseline justify-between mb-4">
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">processo, non diagnosi</div>
-            <h2 className="font-display text-2xl md:text-3xl">Stiamo ancora cercando di capire</h2>
+            <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">archivio</div>
+            <h2 className="font-display text-2xl">Domande emerse nel tempo</h2>
           </div>
         </div>
         <div className="grid md:grid-cols-3 gap-3">
-          {openQuestions.map((q) => (
+          {pastQuestions.map((q) => (
             <article key={q.text} className="group rounded-2xl p-5 bg-card border border-border/60 hover:border-primary/40 hover:shadow-soft transition">
               <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-muted-foreground mb-3">
                 <HelpCircle className="size-3.5 text-primary" /> {q.theme}
@@ -84,10 +111,8 @@ function HomePage() {
             </article>
           ))}
         </div>
-        <p className="text-xs text-muted-foreground mt-4 italic max-w-xl">
-          Non sono risposte. Sono domande che stiamo esplorando insieme, con il tempo che serve.
-        </p>
       </section>
+
 
       {/* Quick lanes */}
       <section className="grid md:grid-cols-3 gap-4 mb-12">
