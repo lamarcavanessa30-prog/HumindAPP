@@ -733,7 +733,7 @@ function PersonalReport() {
           </ul>
         </ReportSection>
 
-        <Disclaimer text="Questo documento è uno strumento di auto-riflessione. Non costituisce una diagnosi, una valutazione clinica né un consiglio medico. Per un percorso terapeutico, rivolgiti a un professionista qualificato." />
+        <ProDisclaimer text="Questo documento è uno strumento di auto-riflessione. Non costituisce una diagnosi, una valutazione clinica né un consiglio medico. Per un percorso terapeutico, rivolgiti a un professionista qualificato." />
       </div>
     </article>
   );
@@ -961,7 +961,7 @@ function ProfessionalReport() {
           </div>
         </ProSection>
 
-        <Disclaimer text="Le osservazioni riportate non costituiscono una diagnosi né una valutazione clinica. Il documento è pensato come mappa ragionata del materiale raccolto, a supporto del dialogo con il professionista. L'interpretazione clinica resta di esclusiva competenza dello specialista." />
+        <ProDisclaimer text="Le osservazioni riportate non costituiscono una diagnosi né una valutazione clinica. Il documento è pensato come mappa ragionata del materiale raccolto, a supporto del dialogo con il professionista. L'interpretazione clinica resta di esclusiva competenza dello specialista." />
       </div>
     </article>
   );
@@ -988,7 +988,7 @@ function ProSection({ title, index, children }: { title: string; index: string; 
   );
 }
 
-function Disclaimer({ text }: { text: string }) {
+function ProDisclaimer({ text }: { text: string }) {
   return (
     <div className="rounded-2xl border border-border/60 bg-secondary/40 p-4 md:p-5">
       <div className="flex gap-3">
