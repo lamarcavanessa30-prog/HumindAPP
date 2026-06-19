@@ -624,97 +624,377 @@ function GrowthTab() {
 
 // ——— REPORTS ———
 function ReportsTab() {
+  const [mode, setMode] = useState<"personale" | "professionista">("personale");
   return (
     <div className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         <div>
           <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1.5">report</div>
-          <h2 className="font-display text-2xl md:text-3xl">Report di auto-riflessione</h2>
+          <h2 className="font-display text-2xl md:text-3xl">
+            {mode === "personale" ? "Report di auto-riflessione" : "Report di osservazione personale"}
+          </h2>
           <p className="text-sm text-muted-foreground mt-2 max-w-2xl leading-relaxed">
-            Una sintesi narrativa, pensata per essere letta con calma — da sola o, se lo desideri, con il tuo terapeuta.
+            {mode === "personale"
+              ? "Una sintesi narrativa, pensata per essere letta con calma — da sola o, se lo desideri, con il tuo terapeuta."
+              : "Una sintesi strutturata del materiale raccolto, pensata per essere condivisa con un professionista della salute mentale."}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary text-primary-foreground text-sm shadow-soft hover:opacity-90 transition">
-            <Download className="size-4" /> Esporta in PDF
+          <button
+            onClick={() => setMode("personale")}
+            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm transition border ${
+              mode === "personale"
+                ? "bg-primary text-primary-foreground border-transparent shadow-soft"
+                : "bg-card border-border/60 hover:bg-muted"
+            }`}
+          >
+            <Download className="size-4" /> Scarica report personale
           </button>
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-card border border-border/60 text-sm hover:bg-muted transition">
-            <Share2 className="size-4" /> Condividi con il terapeuta
+          <button
+            onClick={() => setMode("professionista")}
+            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm transition border ${
+              mode === "professionista"
+                ? "bg-primary text-primary-foreground border-transparent shadow-soft"
+                : "bg-card border-border/60 hover:bg-muted"
+            }`}
+          >
+            <FileText className="size-4" /> Genera report professionista
           </button>
-          <button className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-card border border-border/60 text-sm hover:bg-muted transition">
-            <Printer className="size-4" /> Scarica report
+          <button
+            onClick={() => typeof window !== "undefined" && window.print()}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-card border border-border/60 text-sm hover:bg-muted transition"
+          >
+            <Printer className="size-4" /> Esporta in PDF
           </button>
         </div>
       </div>
 
-      {/* Report document */}
-      <article className="rounded-3xl bg-card border border-border/60 shadow-soft overflow-hidden">
-        <header className="px-6 md:px-10 py-6 md:py-8 bg-gradient-to-br from-secondary via-card to-accent/20 border-b border-border/60">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div>
-              <div className="text-[11px] uppercase tracking-widest text-muted-foreground">Synapse · report personale</div>
-              <h3 className="font-display text-2xl md:text-3xl mt-1">Riflessioni — Giugno 2026</h3>
-            </div>
-            <Pill><Calendar className="size-3" /> generato l'11 giugno</Pill>
+      {mode === "personale" ? <PersonalReport /> : <ProfessionalReport />}
+    </div>
+  );
+}
+
+function PersonalReport() {
+  return (
+    <article className="rounded-3xl bg-card border border-border/60 shadow-soft overflow-hidden">
+      <header className="px-6 md:px-10 py-6 md:py-8 bg-gradient-to-br from-secondary via-card to-accent/20 border-b border-border/60">
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div className="text-[11px] uppercase tracking-widest text-muted-foreground">Synapse · report personale</div>
+            <h3 className="font-display text-2xl md:text-3xl mt-1">Riflessioni — Giugno 2026</h3>
           </div>
-        </header>
+          <Pill><Calendar className="size-3" /> generato l'11 giugno</Pill>
+        </div>
+      </header>
 
-        <div className="px-6 md:px-10 py-8 md:py-10 space-y-10">
-          <ReportSection title="Sintesi esecutiva">
-            <p>
-              Negli ultimi 30 giorni, le tue conversazioni e i tuoi appunti hanno disegnato un periodo di stabilizzazione. Emergono tre temi vivi: i confini sul lavoro, la qualità del riposo serale e il modo in cui riconosci i tuoi meriti. Le risorse personali più nominate restano la curiosità e la capacità di auto-osservazione.
+      <div className="px-6 md:px-10 py-8 md:py-10 space-y-10">
+        <ReportSection title="Sintesi esecutiva">
+          <p>
+            Negli ultimi 30 giorni, le tue conversazioni e i tuoi appunti hanno disegnato un periodo di stabilizzazione. Emergono tre temi vivi: i confini sul lavoro, la qualità del riposo serale e il modo in cui riconosci i tuoi meriti. Le risorse personali più nominate restano la curiosità e la capacità di auto-osservazione.
+          </p>
+        </ReportSection>
+
+        <ReportSection title="Osservazioni chiave">
+          <ul className="list-disc pl-5 space-y-2 marker:text-primary">
+            <li>Le serate restano il momento più delicato della giornata, con un calo medio dell'energia percepita.</li>
+            <li>Il linguaggio che usi su te stessa è diventato più descrittivo e meno valutativo.</li>
+            <li>Hai introdotto due nuove pratiche stabili: lettura prima di dormire e camminata mattutina.</li>
+          </ul>
+        </ReportSection>
+
+        <ReportSection title="Tendenze emotive">
+          <p>La calma percepita è in lieve aumento; la tensione mostra un andamento più piatto rispetto al mese precedente, con picchi nelle giornate ad alta densità di riunioni. L'energia segue un ritmo coerente con i cicli di sonno.</p>
+        </ReportSection>
+
+        <ReportSection title="Pattern identificati">
+          <div className="grid sm:grid-cols-2 gap-3">
+            {["Pensiero tutto-o-nulla nei giorni intensi", "Procrastinazione su compiti emotivamente carichi", "Maggiore disponibilità relazionale dopo le camminate", "Tendenza a rimandare le richieste personali"].map((p) => (
+              <div key={p} className="rounded-xl bg-muted/50 border border-border/60 p-3 text-sm">{p}</div>
+            ))}
+          </div>
+        </ReportSection>
+
+        <ReportSection title="Punti di forza">
+          <div className="flex flex-wrap gap-2">
+            {strengths.map((s) => (
+              <span key={s.label} className="text-sm px-3 py-1.5 rounded-full bg-primary/10 text-foreground/80 border border-primary/20">{s.label}</span>
+            ))}
+          </div>
+        </ReportSection>
+
+        <ReportSection title="Aree suggerite di riflessione">
+          <ul className="space-y-3">
+            {["Cosa rende difficile riposare senza colpa, anche quando ne hai bisogno?",
+              "Quando hai chiesto aiuto recentemente, cosa l'ha reso possibile?",
+              "Cosa cambierebbe se concedessi a una giornata il diritto di non essere produttiva?"
+            ].map((q) => (
+              <li key={q} className="border-l-2 border-primary/40 pl-4 text-foreground/85">{q}</li>
+            ))}
+          </ul>
+        </ReportSection>
+
+        <ProDisclaimer text="Questo documento è uno strumento di auto-riflessione. Non costituisce una diagnosi, una valutazione clinica né un consiglio medico. Per un percorso terapeutico, rivolgiti a un professionista qualificato." />
+      </div>
+    </article>
+  );
+}
+
+// ——— PROFESSIONAL REPORT ———
+const proThemes = [
+  { name: "Regolazione emotiva", freq: "Alta", trend: "In crescita", evidence: "24 elementi osservati", note: "Le riflessioni mostrano una crescente capacità di riconoscere e nominare gli stati emotivi prima dell'azione." },
+  { name: "Gestione dei confini personali", freq: "Alta", trend: "Stabile", evidence: "19 elementi osservati", note: "Sembra emergere una maggiore attenzione alla distinzione tra richieste esterne e priorità personali, soprattutto in ambito lavorativo." },
+  { name: "Energia percepita e carico mentale", freq: "Media", trend: "Variabile", evidence: "16 elementi osservati", note: "Si osserva una correlazione ricorrente tra giornate ad alta densità cognitiva e cali serali di energia." },
+  { name: "Qualità del riposo", freq: "Media", trend: "In miglioramento", evidence: "11 elementi osservati", note: "È stato registrato con maggiore continuità un investimento su rituali serali più sostenibili." },
+];
+
+const proPatterns = [
+  { name: "Auto-critica anticipatoria", freq: "Frequente", trend: "Stabile", desc: "Tendenza a valutare la propria performance prima ancora del completamento del compito." },
+  { name: "Procrastinazione emotiva", freq: "Frequente", trend: "In lieve calo", desc: "Rinvio osservato per attività associate a contenuti emotivi più intensi." },
+  { name: "Ricerca di rassicurazione", freq: "Moderata", trend: "Stabile", desc: "Richiesta di conferma in contesti di incertezza relazionale o decisionale." },
+  { name: "Iperfocalizzazione", freq: "Moderata", trend: "Episodica", desc: "Periodi di concentrazione prolungata seguiti da cali significativi di energia." },
+  { name: "Difficoltà nella definizione dei confini", freq: "Moderata", trend: "In evoluzione", desc: "Le osservazioni suggeriscono un graduale passaggio da accomodamento a negoziazione." },
+];
+
+const proResources = [
+  { name: "Capacità riflessiva", desc: "Frequente attivazione di processi di auto-osservazione descrittivi e non giudicanti." },
+  { name: "Curiosità", desc: "Apertura ricorrente verso nuove letture e domande personali." },
+  { name: "Consapevolezza emotiva", desc: "Crescente granularità nel descrivere gli stati interni." },
+  { name: "Perseveranza", desc: "Continuità nelle pratiche introdotte negli ultimi due mesi." },
+  { name: "Capacità relazionale", desc: "Disponibilità al confronto e all'ascolto in contesti significativi." },
+  { name: "Resilienza", desc: "Recupero osservato dopo episodi di sovraccarico, con tempi di rientro in diminuzione." },
+];
+
+const proTriggers = [
+  "Sovraccarico lavorativo concentrato in finestre di 3-4 giorni",
+  "Conflitti relazionali a basso livello ma protratti",
+  "Riduzione delle ore di sonno sotto le 6 ore",
+  "Cambiamenti improvvisi di routine settimanale",
+];
+
+const proCopingHelpful = ["Scrittura riflessiva serale", "Camminate brevi e regolari", "Richiesta di supporto a figure di fiducia", "Pianificazione realistica delle priorità"];
+const proCopingLess = ["Evitamento di conversazioni difficili", "Posticipo di attività di auto-cura", "Aumento del carico cognitivo nelle fasi di stanchezza"];
+
+const proFrameworks = [
+  { name: "CBT", focus: "Distorsioni cognitive", themes: ["Pensiero tutto-o-nulla", "Catastrofizzazione moderata"], evidence: "Evidenza moderata", note: "Si osserva un linguaggio interno che oscilla tra valutazioni assolute e descrizioni più sfumate, con tendenza recente alla seconda." },
+  { name: "DBT", focus: "Regolazione e tolleranza", themes: ["Tolleranza al disagio", "Efficacia interpersonale"], evidence: "Evidenza moderata", note: "Le osservazioni suggeriscono una progressiva capacità di stare con stati emotivi intensi senza azioni reattive immediate." },
+  { name: "ACT", focus: "Flessibilità psicologica", themes: ["Contatto con i valori", "Defusione cognitiva"], evidence: "Evidenza moderata", note: "Sembra emergere un riferimento più stabile ad alcuni valori personali nelle decisioni quotidiane." },
+  { name: "ADHD-informed", focus: "Funzioni esecutive", themes: ["Avvio del compito", "Percezione del tempo"], evidence: "Evidenza preliminare", note: "Si osservano episodi ricorrenti di difficoltà di avvio non riconducibili a mancanza di motivazione." },
+  { name: "Attaccamento e Relazioni", focus: "Modelli relazionali", themes: ["Ricerca di prossimità", "Gestione della distanza"], evidence: "Evidenza moderata", note: "È stato registrato con maggiore continuità un lavoro di negoziazione nei legami significativi." },
+  { name: "Trauma-informed", focus: "Sicurezza percepita", themes: ["Evitamento mirato", "Comportamenti di protezione"], evidence: "Evidenza preliminare", note: "Le osservazioni vengono presentate come ipotesi e non come indicatori clinici." },
+];
+
+const proTimeline = [
+  { label: "Primo periodo (marzo-aprile)", text: "Temi predominanti: sovraccarico, auto-critica, difficoltà nel riposo. Tono complessivo più valutativo." },
+  { label: "Periodo intermedio (maggio)", text: "Comparsa di pratiche di auto-osservazione e prime sperimentazioni sui confini. Maggiore granularità emotiva." },
+  { label: "Periodo recente (giugno)", text: "Consolidamento di rituali quotidiani, riduzione dell'auto-critica anticipatoria, emergere di domande sulla qualità del riposo e sull'energia." },
+];
+
+const proLiveQuestions = [
+  "Cosa rende difficile riposare senza colpa, anche quando il bisogno è chiaro?",
+  "In quali contesti i confini personali risultano più negoziabili?",
+  "Che relazione esiste tra l'energia percepita e il senso di efficacia?",
+  "Quali condizioni rendono più sostenibile chiedere aiuto?",
+];
+
+const proQuotes = [
+  "«Mi accorgo di rimandare proprio le cose che mi importano di più.»",
+  "«Quando cammino, le idee si mettono in fila da sole.»",
+  "«Non è stanchezza fisica, è una stanchezza di scelte.»",
+];
+
+function ProfessionalReport() {
+  return (
+    <article className="rounded-3xl bg-card border border-border/60 shadow-soft overflow-hidden">
+      <header className="px-6 md:px-12 py-10 md:py-14 bg-gradient-to-b from-secondary/60 via-card to-card border-b border-border/60">
+        <div className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Synapse · report professionista</div>
+        <h3 className="font-display text-3xl md:text-4xl mt-3 leading-tight">Report di osservazione personale</h3>
+        <p className="text-sm md:text-base text-muted-foreground mt-3 max-w-2xl leading-relaxed">
+          Sintesi strutturata delle conversazioni, riflessioni e materiali raccolti.
+        </p>
+        <div className="mt-6 grid sm:grid-cols-3 gap-4 text-sm">
+          <CoverField label="Periodo osservato" value="1 marzo — 11 giugno 2026" />
+          <CoverField label="Data di generazione" value="11 giugno 2026" />
+          <CoverField label="Versione" value="1.0 · sintesi estesa" />
+        </div>
+        <div className="mt-6 rounded-2xl border border-border/60 bg-card/60 p-4 md:p-5">
+          <div className="flex gap-3">
+            <Shield className="size-4 text-primary mt-0.5 shrink-0" />
+            <p className="text-xs md:text-sm text-foreground/75 leading-relaxed">
+              Il presente documento non costituisce una diagnosi, una valutazione clinica né un'indicazione terapeutica. Le osservazioni riportate derivano dal materiale raccolto in autonomia dalla persona e sono presentate come ipotesi descrittive a supporto del lavoro del professionista.
             </p>
-          </ReportSection>
-
-          <ReportSection title="Osservazioni chiave">
-            <ul className="list-disc pl-5 space-y-2 marker:text-primary">
-              <li>Le serate restano il momento più delicato della giornata, con un calo medio dell'energia percepita.</li>
-              <li>Il linguaggio che usi su te stessa è diventato più descrittivo e meno valutativo.</li>
-              <li>Hai introdotto due nuove pratiche stabili: lettura prima di dormire e camminata mattutina.</li>
-            </ul>
-          </ReportSection>
-
-          <ReportSection title="Tendenze emotive">
-            <p>La calma percepita è in lieve aumento; la tensione mostra un andamento più piatto rispetto al mese precedente, con picchi nelle giornate ad alta densità di riunioni. L'energia segue un ritmo coerente con i cicli di sonno.</p>
-          </ReportSection>
-
-          <ReportSection title="Pattern identificati">
-            <div className="grid sm:grid-cols-2 gap-3">
-              {["Pensiero tutto-o-nulla nei giorni intensi", "Procrastinazione su compiti emotivamente carichi", "Maggiore disponibilità relazionale dopo le camminate", "Tendenza a rimandare le richieste personali"].map((p) => (
-                <div key={p} className="rounded-xl bg-muted/50 border border-border/60 p-3 text-sm">{p}</div>
-              ))}
-            </div>
-          </ReportSection>
-
-          <ReportSection title="Punti di forza">
-            <div className="flex flex-wrap gap-2">
-              {strengths.map((s) => (
-                <span key={s.label} className="text-sm px-3 py-1.5 rounded-full bg-primary/10 text-foreground/80 border border-primary/20">{s.label}</span>
-              ))}
-            </div>
-          </ReportSection>
-
-          <ReportSection title="Aree suggerite di riflessione">
-            <ul className="space-y-3">
-              {["Cosa rende difficile riposare senza colpa, anche quando ne hai bisogno?",
-                "Quando hai chiesto aiuto recentemente, cosa l'ha reso possibile?",
-                "Cosa cambierebbe se concedessi a una giornata il diritto di non essere produttiva?"
-              ].map((q) => (
-                <li key={q} className="border-l-2 border-primary/40 pl-4 text-foreground/85">{q}</li>
-              ))}
-            </ul>
-          </ReportSection>
-
-          <div className="rounded-2xl border border-border/60 bg-secondary/40 p-4 md:p-5">
-            <div className="flex gap-3">
-              <Info className="size-4 text-primary mt-0.5 shrink-0" />
-              <p className="text-xs md:text-sm text-foreground/75 leading-relaxed">
-                Questo documento è uno strumento di auto-riflessione. Non costituisce una diagnosi, una valutazione clinica né un consiglio medico. Per un percorso terapeutico, rivolgiti a un professionista qualificato.
-              </p>
-            </div>
           </div>
         </div>
-      </article>
+      </header>
+
+      <div className="px-6 md:px-12 py-10 md:py-12 space-y-12">
+        <ProSection title="Sintesi generale" index="01">
+          <p>
+            Nel periodo osservato emergono con maggiore frequenza temi legati alla regolazione emotiva, alla gestione dei confini personali e alla relazione tra energia percepita e carico mentale. Le osservazioni suggeriscono un progressivo spostamento da un registro valutativo a uno più descrittivo nell'auto-narrazione. Sembra emergere una maggiore continuità nelle pratiche di auto-cura, accompagnata da episodi ricorrenti di auto-critica anticipatoria nelle fasi ad alta densità cognitiva. Le risorse più stabilmente nominate restano la capacità riflessiva, la curiosità e la disponibilità al confronto relazionale.
+          </p>
+        </ProSection>
+
+        <ProSection title="Temi principali" index="02">
+          <div className="space-y-4">
+            {proThemes.map((t) => (
+              <div key={t.name} className="rounded-2xl border border-border/60 bg-card p-5">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h4 className="font-display text-lg">{t.name}</h4>
+                  <div className="flex flex-wrap gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
+                    <span>Frequenza: <span className="text-foreground/80 normal-case tracking-normal">{t.freq}</span></span>
+                    <span>Evoluzione: <span className="text-foreground/80 normal-case tracking-normal">{t.trend}</span></span>
+                    <span>Evidenza: <span className="text-foreground/80 normal-case tracking-normal">{t.evidence}</span></span>
+                  </div>
+                </div>
+                <p className="text-sm text-foreground/80 mt-3 leading-relaxed">{t.note}</p>
+              </div>
+            ))}
+          </div>
+        </ProSection>
+
+        <ProSection title="Pattern ricorrenti" index="03">
+          <div className="grid md:grid-cols-2 gap-3">
+            {proPatterns.map((p) => (
+              <div key={p.name} className="rounded-xl border border-border/60 bg-muted/30 p-4">
+                <div className="flex items-baseline justify-between gap-2">
+                  <h5 className="font-medium">{p.name}</h5>
+                  <span className="text-[11px] uppercase tracking-widest text-muted-foreground">{p.freq}</span>
+                </div>
+                <p className="text-sm text-foreground/75 mt-2 leading-relaxed">{p.desc}</p>
+                <div className="text-[11px] uppercase tracking-widest text-muted-foreground mt-3">Andamento: <span className="text-foreground/80 normal-case tracking-normal">{p.trend}</span></div>
+              </div>
+            ))}
+          </div>
+        </ProSection>
+
+        <ProSection title="Risorse e fattori protettivi" index="04">
+          <div className="grid md:grid-cols-2 gap-3">
+            {proResources.map((r) => (
+              <div key={r.name} className="rounded-xl border border-primary/20 bg-primary/5 p-4">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="size-3.5 text-primary" />
+                  <h5 className="font-medium">{r.name}</h5>
+                </div>
+                <p className="text-sm text-foreground/80 mt-2 leading-relaxed">{r.desc}</p>
+              </div>
+            ))}
+          </div>
+        </ProSection>
+
+        <ProSection title="Trigger e contesti associati" index="05">
+          <p className="text-sm text-muted-foreground mb-3">Elementi presentati come ipotesi osservative, non come fattori causali.</p>
+          <ul className="space-y-2">
+            {proTriggers.map((t) => (
+              <li key={t} className="text-sm border-l-2 border-border pl-4 py-1 text-foreground/85">{t}</li>
+            ))}
+          </ul>
+        </ProSection>
+
+        <ProSection title="Strategie di coping osservate" index="06">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-2">Apparentemente utili</div>
+              <ul className="space-y-2">
+                {proCopingHelpful.map((s) => (
+                  <li key={s} className="text-sm text-foreground/85 flex gap-2"><CheckCircle2 className="size-4 text-primary mt-0.5 shrink-0" />{s}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-2">Apparentemente meno efficaci</div>
+              <ul className="space-y-2">
+                {proCopingLess.map((s) => (
+                  <li key={s} className="text-sm text-foreground/85 flex gap-2"><ArrowRight className="size-4 text-muted-foreground mt-0.5 shrink-0" />{s}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </ProSection>
+
+        <ProSection title="Framework clinici utilizzati" index="07">
+          <p className="text-sm text-muted-foreground mb-4">I framework sono utilizzati come lenti interpretative del materiale raccolto, non come classificazioni della persona.</p>
+          <div className="space-y-3">
+            {proFrameworks.map((f) => (
+              <div key={f.name} className="rounded-2xl border border-border/60 p-5">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <div>
+                    <div className="text-[11px] uppercase tracking-widest text-muted-foreground">{f.focus}</div>
+                    <h5 className="font-display text-lg mt-0.5">{f.name}</h5>
+                  </div>
+                  <span className="text-[11px] uppercase tracking-widest text-muted-foreground">{f.evidence}</span>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {f.themes.map((th) => (
+                    <span key={th} className="text-xs px-2.5 py-1 rounded-full bg-secondary/60 border border-border/60">{th}</span>
+                  ))}
+                </div>
+                <p className="text-sm text-foreground/80 mt-3 leading-relaxed">{f.note}</p>
+              </div>
+            ))}
+          </div>
+        </ProSection>
+
+        <ProSection title="Evoluzione nel tempo" index="08">
+          <ol className="space-y-4">
+            {proTimeline.map((p) => (
+              <li key={p.label} className="border-l-2 border-primary/40 pl-4">
+                <div className="text-[11px] uppercase tracking-widest text-muted-foreground">{p.label}</div>
+                <p className="text-sm text-foreground/85 mt-1 leading-relaxed">{p.text}</p>
+              </li>
+            ))}
+          </ol>
+        </ProSection>
+
+        <ProSection title="Domande vive" index="09">
+          <ul className="space-y-3">
+            {proLiveQuestions.map((q) => (
+              <li key={q} className="rounded-xl border border-border/60 bg-secondary/30 p-4 text-foreground/85">{q}</li>
+            ))}
+          </ul>
+        </ProSection>
+
+        <ProSection title="Citazioni rappresentative" index="10">
+          <p className="text-sm text-muted-foreground mb-3">Estratti brevi e anonimizzati, utili a restituire il tono emotivo del materiale.</p>
+          <div className="space-y-2">
+            {proQuotes.map((q) => (
+              <blockquote key={q} className="text-sm italic text-foreground/80 border-l-2 border-border pl-4">{q}</blockquote>
+            ))}
+          </div>
+        </ProSection>
+
+        <ProDisclaimer text="Le osservazioni riportate non costituiscono una diagnosi né una valutazione clinica. Il documento è pensato come mappa ragionata del materiale raccolto, a supporto del dialogo con il professionista. L'interpretazione clinica resta di esclusiva competenza dello specialista." />
+      </div>
+    </article>
+  );
+}
+
+function CoverField({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-border/60 bg-card/60 p-3">
+      <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{label}</div>
+      <div className="text-sm text-foreground/90 mt-1">{value}</div>
+    </div>
+  );
+}
+
+function ProSection({ title, index, children }: { title: string; index: string; children: React.ReactNode }) {
+  return (
+    <section>
+      <div className="flex items-baseline gap-3 mb-4 pb-2 border-b border-border/60">
+        <span className="text-[11px] uppercase tracking-widest text-muted-foreground">{index}</span>
+        <h4 className="font-display text-xl md:text-2xl">{title}</h4>
+      </div>
+      <div className="text-[15px] leading-relaxed text-foreground/90 space-y-3">{children}</div>
+    </section>
+  );
+}
+
+function ProDisclaimer({ text }: { text: string }) {
+  return (
+    <div className="rounded-2xl border border-border/60 bg-secondary/40 p-4 md:p-5">
+      <div className="flex gap-3">
+        <Info className="size-4 text-primary mt-0.5 shrink-0" />
+        <p className="text-xs md:text-sm text-foreground/75 leading-relaxed">{text}</p>
+      </div>
     </div>
   );
 }
