@@ -92,22 +92,22 @@ function HomePage() {
         </article>
       </section>
 
-      {/* Domande emerse nel tempo */}
+      {/* Archivio delle domande — tracce precedenti del percorso */}
       <section className="mb-12">
         <div className="flex items-baseline justify-between mb-4">
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-1">archivio</div>
-            <h2 className="font-display text-2xl">Domande emerse nel tempo</h2>
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">tracce del percorso</div>
+            <h2 className="font-display text-lg text-muted-foreground">Domande emerse nel tempo</h2>
           </div>
         </div>
-        <div className="grid md:grid-cols-3 gap-3">
+        <div className="grid md:grid-cols-3 gap-2">
           {pastQuestions.map((q) => (
-            <article key={q.text} className="group rounded-2xl p-5 bg-card border border-border/60 hover:border-primary/40 hover:shadow-soft transition">
-              <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-muted-foreground mb-3">
-                <HelpCircle className="size-3.5 text-primary" /> {q.theme}
+            <article key={q.text} className="group rounded-xl p-3 bg-secondary/30 border border-border/40 hover:border-primary/30 transition">
+              <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5">
+                <HelpCircle className="size-3 text-primary/70" /> {q.theme}
               </div>
-              <p className="font-display text-lg leading-snug text-foreground">{q.text}</p>
-              <div className="mt-4 text-[11px] text-muted-foreground italic">{q.status}</div>
+              <p className="text-sm leading-snug text-foreground/80">{q.text}</p>
+              <div className="mt-2 text-[10px] text-muted-foreground italic">{q.status}</div>
             </article>
           ))}
         </div>
