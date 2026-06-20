@@ -827,13 +827,13 @@ function ProfessionalReport() {
       </header>
 
       <div className="px-6 md:px-12 py-10 md:py-12 space-y-12">
-        <ProSection title="Sintesi generale" index="01">
+        <ProSection title="Sintesi generale" index="02">
           <p>
             Nel periodo osservato emergono con maggiore frequenza temi legati alla regolazione emotiva, alla gestione dei confini personali e alla relazione tra energia percepita e carico mentale. Le osservazioni suggeriscono un progressivo spostamento da un registro valutativo a uno più descrittivo nell'auto-narrazione. Sembra emergere una maggiore continuità nelle pratiche di auto-cura, accompagnata da episodi ricorrenti di auto-critica anticipatoria nelle fasi ad alta densità cognitiva. Le risorse più stabilmente nominate restano la capacità riflessiva, la curiosità e la disponibilità al confronto relazionale.
           </p>
         </ProSection>
 
-        <ProSection title="Temi principali" index="02">
+        <ProSection title="Temi principali" index="03">
           <div className="space-y-4">
             {proThemes.map((t) => (
               <div key={t.name} className="rounded-2xl border border-border/60 bg-card p-5">
@@ -851,7 +851,7 @@ function ProfessionalReport() {
           </div>
         </ProSection>
 
-        <ProSection title="Pattern ricorrenti" index="03">
+        <ProSection title="Pattern ricorrenti" index="04">
           <div className="grid md:grid-cols-2 gap-3">
             {proPatterns.map((p) => (
               <div key={p.name} className="rounded-xl border border-border/60 bg-muted/30 p-4">
@@ -866,7 +866,7 @@ function ProfessionalReport() {
           </div>
         </ProSection>
 
-        <ProSection title="Risorse e fattori protettivi" index="04">
+        <ProSection title="Risorse e fattori protettivi" index="05">
           <div className="grid md:grid-cols-2 gap-3">
             {proResources.map((r) => (
               <div key={r.name} className="rounded-xl border border-primary/20 bg-primary/5 p-4">
@@ -880,7 +880,7 @@ function ProfessionalReport() {
           </div>
         </ProSection>
 
-        <ProSection title="Trigger e contesti associati" index="05">
+        <ProSection title="Trigger e contesti associati" index="06">
           <p className="text-sm text-muted-foreground mb-3">Elementi presentati come ipotesi osservative, non come fattori causali.</p>
           <ul className="space-y-2">
             {proTriggers.map((t) => (
@@ -889,7 +889,7 @@ function ProfessionalReport() {
           </ul>
         </ProSection>
 
-        <ProSection title="Strategie di coping osservate" index="06">
+        <ProSection title="Strategie di coping osservate" index="07">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <div className="text-[11px] uppercase tracking-widest text-muted-foreground mb-2">Apparentemente utili</div>
@@ -910,7 +910,7 @@ function ProfessionalReport() {
           </div>
         </ProSection>
 
-        <ProSection title="Framework clinici utilizzati" index="07">
+        <ProSection title="Framework clinici utilizzati" index="08">
           <p className="text-sm text-muted-foreground mb-4">I framework sono utilizzati come lenti interpretative del materiale raccolto, non come classificazioni della persona.</p>
           <div className="space-y-3">
             {proFrameworks.map((f) => (
@@ -933,7 +933,7 @@ function ProfessionalReport() {
           </div>
         </ProSection>
 
-        <ProSection title="Evoluzione nel tempo" index="08">
+        <ProSection title="Evoluzione nel tempo" index="09">
           <ol className="space-y-4">
             {proTimeline.map((p) => (
               <li key={p.label} className="border-l-2 border-primary/40 pl-4">
@@ -944,7 +944,7 @@ function ProfessionalReport() {
           </ol>
         </ProSection>
 
-        <ProSection title="Domande vive" index="09">
+        <ProSection title="Domande vive" index="10">
           <ul className="space-y-3">
             {proLiveQuestions.map((q) => (
               <li key={q} className="rounded-xl border border-border/60 bg-secondary/30 p-4 text-foreground/85">{q}</li>
@@ -952,7 +952,7 @@ function ProfessionalReport() {
           </ul>
         </ProSection>
 
-        <ProSection title="Citazioni rappresentative" index="10">
+        <ProSection title="Citazioni rappresentative" index="11">
           <p className="text-sm text-muted-foreground mb-3">Estratti brevi e anonimizzati, utili a restituire il tono emotivo del materiale.</p>
           <div className="space-y-2">
             {proQuotes.map((q) => (
