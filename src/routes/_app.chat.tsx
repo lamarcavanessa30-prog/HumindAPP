@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Sparkles, Send, Paperclip, BookMarked, AlertTriangle, X } from "lucide-react";
+import { Sparkles, Send, Paperclip, BookMarked, AlertTriangle, X, Wind, Clock } from "lucide-react";
+import { suggestPracticeForText } from "./_app.pause";
 
 export const Route = createFileRoute("/_app/chat")({
   component: ChatPage,
