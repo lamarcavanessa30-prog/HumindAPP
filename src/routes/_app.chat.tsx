@@ -158,12 +158,20 @@ function ChatPage() {
     const text = input;
     setMessages((m) => [...m, { id: Date.now(), from: "me", text }]);
     setInput("");
+    const nextCount = userMsgCount + 1;
+    setUserMsgCount(nextCount);
     const current = DEPTHS.find((d) => d.id === depthId) ?? DEPTHS[1];
     setTimeout(() => {
       setMessages((m) => [
         ...m,
         { id: Date.now() + 1, from: "ai", text: current.reply, refs: current.refs, level: current.id },
       ]);
+      // Contextual practice suggestion — never invasive, at most one every 4 user messages
+      const candidate = suggestPracticeForText(text);
+      if (candidate && !dismissed.includes(candidate.id) && nextCount - lastSuggestionAt >= 4) {
+        setSuggestion(candidate);
+        setLastSuggestionAt(nextCount);
+      }
     }, 800);
   };
 
