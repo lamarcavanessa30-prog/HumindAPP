@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Sparkles, Send, Paperclip, BookMarked, AlertTriangle, X } from "lucide-react";
+import { Sparkles, Send, Paperclip, BookMarked, AlertTriangle, X, Wind, Clock } from "lucide-react";
+import { suggestPracticeForText } from "./_app.pause";
 
 export const Route = createFileRoute("/_app/chat")({
   component: ChatPage,
@@ -101,6 +102,10 @@ function ChatPage() {
     { id: 3, from: "ai", text: "Eh, ti capisco. Mi sono ricordata una cosa che avevi scritto ad aprile, su Calvino e la leggerezza — credo si parlino tra loro. Te la mostro?", refs: ["Letture lente", "Aprile · 14"], level: "riflessione" },
   ]);
   const [input, setInput] = useState("");
+  const [suggestion, setSuggestion] = useState<ReturnType<typeof suggestPracticeForText>>(null);
+  const [userMsgCount, setUserMsgCount] = useState(0);
+  const [lastSuggestionAt, setLastSuggestionAt] = useState(-99);
+  const [dismissed, setDismissed] = useState<string[]>([]);
 
   // Restore depth from localStorage
   useEffect(() => {
@@ -153,12 +158,20 @@ function ChatPage() {
     const text = input;
     setMessages((m) => [...m, { id: Date.now(), from: "me", text }]);
     setInput("");
+    const nextCount = userMsgCount + 1;
+    setUserMsgCount(nextCount);
     const current = DEPTHS.find((d) => d.id === depthId) ?? DEPTHS[1];
     setTimeout(() => {
       setMessages((m) => [
         ...m,
         { id: Date.now() + 1, from: "ai", text: current.reply, refs: current.refs, level: current.id },
       ]);
+      // Contextual practice suggestion — never invasive, at most one every 4 user messages
+      const candidate = suggestPracticeForText(text);
+      if (candidate && !dismissed.includes(candidate.id) && nextCount - lastSuggestionAt >= 4) {
+        setSuggestion(candidate);
+        setLastSuggestionAt(nextCount);
+      }
     }, 800);
   };
 
@@ -259,6 +272,54 @@ function ChatPage() {
           })}
         </div>
       </div>
+
+      {/* Contextual practice suggestion */}
+      {suggestion && (
+        <div className="px-6 md:px-12">
+          <div className="max-w-3xl mx-auto rounded-2xl border border-border/60 bg-secondary/40 p-4 flex items-start gap-3">
+            <div className="size-9 shrink-0 rounded-full bg-primary/10 grid place-items-center">
+              <Wind className="size-4 text-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Suggerimento gentile</div>
+              <p className="mt-1 text-sm leading-relaxed">
+                Potrebbe esserti utile una breve pausa guidata di {suggestion.minutes} minuti prima di continuare:{" "}
+                <span className="font-medium">{suggestion.title}</span>.
+              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <Link
+                  to="/pause"
+                  onClick={() => setSuggestion(null)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-primary text-primary-foreground hover:opacity-90 transition"
+                >
+                  <Clock className="size-3" /> Apri la pausa
+                </Link>
+                <button
+                  onClick={() => setSuggestion(null)}
+                  className="px-3 py-1.5 rounded-lg text-xs text-muted-foreground hover:bg-muted transition"
+                >
+                  Ignora
+                </button>
+                <button
+                  onClick={() => {
+                    setDismissed((d) => [...d, suggestion.id]);
+                    setSuggestion(null);
+                  }}
+                  className="px-3 py-1.5 rounded-lg text-xs text-muted-foreground hover:bg-muted transition"
+                >
+                  Non proporla più
+                </button>
+              </div>
+            </div>
+            <button
+              onClick={() => setSuggestion(null)}
+              className="size-7 grid place-items-center rounded-md text-muted-foreground hover:bg-muted"
+            >
+              <X className="size-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Composer */}
       <div className="px-6 md:px-12 pb-8 pt-4">
