@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AppProfiloRouteImport } from './routes/_app.profilo'
+import { Route as AppPauseRouteImport } from './routes/_app.pause'
 import { Route as AppMappaRouteImport } from './routes/_app.mappa'
 import { Route as AppInsightRouteImport } from './routes/_app.insight'
 import { Route as AppFrameworkRouteImport } from './routes/_app.framework'
@@ -30,6 +31,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const AppProfiloRoute = AppProfiloRouteImport.update({
   id: '/profilo',
   path: '/profilo',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPauseRoute = AppPauseRouteImport.update({
+  id: '/pause',
+  path: '/pause',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMappaRoute = AppMappaRouteImport.update({
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/framework': typeof AppFrameworkRoute
   '/insight': typeof AppInsightRoute
   '/mappa': typeof AppMappaRoute
+  '/pause': typeof AppPauseRoute
   '/profilo': typeof AppProfiloRoute
 }
 export interface FileRoutesByTo {
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/framework': typeof AppFrameworkRoute
   '/insight': typeof AppInsightRoute
   '/mappa': typeof AppMappaRoute
+  '/pause': typeof AppPauseRoute
   '/profilo': typeof AppProfiloRoute
   '/': typeof AppIndexRoute
 }
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/_app/framework': typeof AppFrameworkRoute
   '/_app/insight': typeof AppInsightRoute
   '/_app/mappa': typeof AppMappaRoute
+  '/_app/pause': typeof AppPauseRoute
   '/_app/profilo': typeof AppProfiloRoute
   '/_app/': typeof AppIndexRoute
 }
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/framework'
     | '/insight'
     | '/mappa'
+    | '/pause'
     | '/profilo'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
     | '/framework'
     | '/insight'
     | '/mappa'
+    | '/pause'
     | '/profilo'
     | '/'
   id:
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/_app/framework'
     | '/_app/insight'
     | '/_app/mappa'
+    | '/_app/pause'
     | '/_app/profilo'
     | '/_app/'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/profilo'
       fullPath: '/profilo'
       preLoaderRoute: typeof AppProfiloRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/pause': {
+      id: '/_app/pause'
+      path: '/pause'
+      fullPath: '/pause'
+      preLoaderRoute: typeof AppPauseRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/mappa': {
@@ -189,6 +208,7 @@ interface AppRouteChildren {
   AppFrameworkRoute: typeof AppFrameworkRoute
   AppInsightRoute: typeof AppInsightRoute
   AppMappaRoute: typeof AppMappaRoute
+  AppPauseRoute: typeof AppPauseRoute
   AppProfiloRoute: typeof AppProfiloRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -199,6 +219,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppFrameworkRoute: AppFrameworkRoute,
   AppInsightRoute: AppInsightRoute,
   AppMappaRoute: AppMappaRoute,
+  AppPauseRoute: AppPauseRoute,
   AppProfiloRoute: AppProfiloRoute,
   AppIndexRoute: AppIndexRoute,
 }
