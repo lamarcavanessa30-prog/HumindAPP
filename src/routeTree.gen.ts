@@ -14,6 +14,7 @@ import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AppProfiloRouteImport } from './routes/_app.profilo'
 import { Route as AppPauseRouteImport } from './routes/_app.pause'
 import { Route as AppMappaRouteImport } from './routes/_app.mappa'
+import { Route as AppKnowledgeRouteImport } from './routes/_app.knowledge'
 import { Route as AppInsightRouteImport } from './routes/_app.insight'
 import { Route as AppFrameworkRouteImport } from './routes/_app.framework'
 import { Route as AppDiarioRouteImport } from './routes/_app.diario'
@@ -43,6 +44,11 @@ const AppMappaRoute = AppMappaRouteImport.update({
   path: '/mappa',
   getParentRoute: () => AppRoute,
 } as any)
+const AppKnowledgeRoute = AppKnowledgeRouteImport.update({
+  id: '/knowledge',
+  path: '/knowledge',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppInsightRoute = AppInsightRouteImport.update({
   id: '/insight',
   path: '/insight',
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/diario': typeof AppDiarioRoute
   '/framework': typeof AppFrameworkRoute
   '/insight': typeof AppInsightRoute
+  '/knowledge': typeof AppKnowledgeRoute
   '/mappa': typeof AppMappaRoute
   '/pause': typeof AppPauseRoute
   '/profilo': typeof AppProfiloRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByTo {
   '/diario': typeof AppDiarioRoute
   '/framework': typeof AppFrameworkRoute
   '/insight': typeof AppInsightRoute
+  '/knowledge': typeof AppKnowledgeRoute
   '/mappa': typeof AppMappaRoute
   '/pause': typeof AppPauseRoute
   '/profilo': typeof AppProfiloRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/_app/diario': typeof AppDiarioRoute
   '/_app/framework': typeof AppFrameworkRoute
   '/_app/insight': typeof AppInsightRoute
+  '/_app/knowledge': typeof AppKnowledgeRoute
   '/_app/mappa': typeof AppMappaRoute
   '/_app/pause': typeof AppPauseRoute
   '/_app/profilo': typeof AppProfiloRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
     | '/diario'
     | '/framework'
     | '/insight'
+    | '/knowledge'
     | '/mappa'
     | '/pause'
     | '/profilo'
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/diario'
     | '/framework'
     | '/insight'
+    | '/knowledge'
     | '/mappa'
     | '/pause'
     | '/profilo'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/_app/diario'
     | '/_app/framework'
     | '/_app/insight'
+    | '/_app/knowledge'
     | '/_app/mappa'
     | '/_app/pause'
     | '/_app/profilo'
@@ -171,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMappaRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/knowledge': {
+      id: '/_app/knowledge'
+      path: '/knowledge'
+      fullPath: '/knowledge'
+      preLoaderRoute: typeof AppKnowledgeRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/insight': {
       id: '/_app/insight'
       path: '/insight'
@@ -207,6 +226,7 @@ interface AppRouteChildren {
   AppDiarioRoute: typeof AppDiarioRoute
   AppFrameworkRoute: typeof AppFrameworkRoute
   AppInsightRoute: typeof AppInsightRoute
+  AppKnowledgeRoute: typeof AppKnowledgeRoute
   AppMappaRoute: typeof AppMappaRoute
   AppPauseRoute: typeof AppPauseRoute
   AppProfiloRoute: typeof AppProfiloRoute
@@ -218,6 +238,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDiarioRoute: AppDiarioRoute,
   AppFrameworkRoute: AppFrameworkRoute,
   AppInsightRoute: AppInsightRoute,
+  AppKnowledgeRoute: AppKnowledgeRoute,
   AppMappaRoute: AppMappaRoute,
   AppPauseRoute: AppPauseRoute,
   AppProfiloRoute: AppProfiloRoute,
