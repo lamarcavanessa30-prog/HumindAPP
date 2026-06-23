@@ -841,8 +841,23 @@ const proFrameworks = [
   { name: "DBT", focus: "Regolazione e tolleranza", themes: ["Tolleranza al disagio", "Efficacia interpersonale"], evidence: "Evidenza moderata", note: "Le osservazioni suggeriscono una progressiva capacità di stare con stati emotivi intensi senza azioni reattive immediate." },
   { name: "ACT", focus: "Flessibilità psicologica", themes: ["Contatto con i valori", "Defusione cognitiva"], evidence: "Evidenza moderata", note: "Sembra emergere un riferimento più stabile ad alcuni valori personali nelle decisioni quotidiane." },
   { name: "ADHD-informed", focus: "Funzioni esecutive", themes: ["Avvio del compito", "Percezione del tempo"], evidence: "Evidenza preliminare", note: "Si osservano episodi ricorrenti di difficoltà di avvio non riconducibili a mancanza di motivazione." },
+  { name: "Autism-informed", focus: "Funzionamento sensoriale e sociale", themes: ["Carico sensoriale", "Energia sociale", "Masking", "Routine rigeneranti"], evidence: "Evidenza preliminare", note: "Emergono pattern compatibili con una sensibilità sensoriale elevata e un alto costo energetico nella navigazione sociale, accompagnati da riferimenti a strategie di adattamento (masking) in contesti formali. Si segnala la presenza di interessi profondi descritti come fonte stabile di rigenerazione. Non si tratta di indicatori diagnostici, ma di descrittori funzionali utili al dialogo clinico." },
   { name: "Attaccamento e Relazioni", focus: "Modelli relazionali", themes: ["Ricerca di prossimità", "Gestione della distanza"], evidence: "Evidenza moderata", note: "È stato registrato con maggiore continuità un lavoro di negoziazione nei legami significativi." },
   { name: "Trauma-informed", focus: "Sicurezza percepita", themes: ["Evitamento mirato", "Comportamenti di protezione"], evidence: "Evidenza preliminare", note: "Le osservazioni vengono presentate come ipotesi e non come indicatori clinici." },
+];
+
+const proAutismPatterns = [
+  { label: "Carico sensoriale", desc: "Riferimenti ricorrenti a stanchezza dopo ambienti rumorosi, luci intense o spazi affollati. La persona descrive il bisogno di rientro in ambienti a stimolazione ridotta come modalità rigenerativa." },
+  { label: "Energia sociale (social battery)", desc: "Le interazioni prolungate sembrano comportare un costo energetico significativo, con tempi di recupero descritti come più lunghi rispetto al carico percepito durante l'evento." },
+  { label: "Masking", desc: "Sono presenti riferimenti espliciti allo sforzo di 'sembrare nella norma' in contesti professionali, con conseguente affaticamento descritto a posteriori." },
+  { label: "Interessi profondi e routine rigeneranti", desc: "Vengono nominate attività specifiche descritte come fonte stabile di concentrazione, piacere e regolazione. Funzionano come risorsa, non come evitamento." },
+];
+
+const proDreamThemes = [
+  { symbol: "Acqua che sale / sommersione", dayLink: "Picchi di ansia da prestazione e scadenze ravvicinate", note: "Si osserva una correlazione ricorrente tra immagini oniriche di sommersione e periodi in cui la persona ha descritto la sensazione di 'non riuscire a stare al passo'." },
+  { symbol: "Stanze sconosciute nella propria casa", dayLink: "Periodi di ridefinizione personale o decisionale", note: "Le immagini di scoperta di spazi interni nuovi tendono a comparire in concomitanza con riflessioni sulla propria identità professionale." },
+  { symbol: "Inseguimenti senza minaccia esplicita", dayLink: "Settimane ad alto carico relazionale", note: "L'elemento ricorrente non è la paura quanto la fatica del movimento, in parallelo con riferimenti diurni a richieste relazionali percepite come eccessive." },
+  { symbol: "Voce che non esce", dayLink: "Episodi di confini negoziati a fatica", note: "Compare in prossimità di situazioni in cui la persona descrive di aver detto 'sì' a malincuore." },
 ];
 
 const proTimeline = [
