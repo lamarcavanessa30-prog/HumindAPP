@@ -769,6 +769,29 @@ function PersonalReport() {
           </ul>
         </ReportSection>
 
+        <ReportSection title="Epifanie">
+          <p className="text-sm text-muted-foreground -mt-1 mb-4">
+            Frasi brevi che hanno provato a dare un nome a qualcosa che già sentivi. Non sono verità: sono offerte. Tienile se ti risuonano, lasciale andare se non lo fanno.
+          </p>
+          <div className="space-y-4">
+            {[
+              { line: "Non è stanchezza fisica, è una stanchezza di scelte.", why: "Connessa al pattern di sovraccarico decisionale osservato nelle giornate ad alta densità di richieste." },
+              { line: "Ti muovi come se dovessi sempre chiedere il permesso di esistere.", why: "Lettura ispirata alla Teoria dell'Attaccamento, a partire da ricorrenze di compiacenza nei contesti professionali." },
+              { line: "Il tuo «sì» pesa più dei tuoi «no».", why: "Pattern osservato di confini negoziati a fatica, con costo energetico riferito il giorno seguente." },
+              { line: "Stai imparando a stare con quello che senti senza doverlo aggiustare subito.", why: "Indicatore descrittivo di tolleranza al disagio, in linea con la cornice DBT." },
+            ].map((e) => (
+              <figure key={e.line} className="rounded-2xl border border-border/60 bg-gradient-to-br from-secondary/40 to-card p-5">
+                <blockquote className="font-display text-lg md:text-xl leading-snug text-foreground">
+                  &ldquo;{e.line}&rdquo;
+                </blockquote>
+                <figcaption className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  <span className="uppercase tracking-widest">Perché</span> · {e.why}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </ReportSection>
+
         <ProDisclaimer text="Questo documento è uno strumento di auto-riflessione. Non costituisce una diagnosi, una valutazione clinica né un consiglio medico. Per un percorso terapeutico, rivolgiti a un professionista qualificato." />
       </div>
     </article>
