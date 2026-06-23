@@ -9,7 +9,7 @@ import {
   FileText,
   Download,
   Share2,
-  Printer,
+  
   Info,
   Heart,
   Shield,
