@@ -1104,7 +1104,7 @@ function ProfessionalReport() {
         </ProSection>
 
 
-        <ProSection title="Fondamenti teorici utilizzati" index="12">
+        <ProSection title="Fondamenti teorici utilizzati" index="14">
           <p className="text-sm text-muted-foreground mb-4">
             Le lenti teoriche elencate sono utilizzate come cornice interpretativa del materiale raccolto.
             Per una mappa estesa di ciascun framework, dei suoi autori e dei suoi limiti, si rimanda alla
