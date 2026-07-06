@@ -16,6 +16,7 @@ import {
   composePromptContext,
   type PromptConversationMessage,
 } from "@/domain/promptComposer";
+import { extractCognitiveCandidates } from "@/domain/cognitiveExtraction";
 import { useThoughts } from "@/domain/ThoughtsProvider";
 
 export const Route = createFileRoute("/_app/chat")({
@@ -208,6 +209,8 @@ function ChatPage() {
       recentConversation,
       conversationMode: modeId,
     });
+    const cognitiveExtraction = extractCognitiveCandidates(promptContext);
+    void cognitiveExtraction;
 
     addThought({ text, source: "chat", tags: ["Conversazione"] });
     setMessages((m) => [...m, { id: Date.now(), from: "me", text }]);
