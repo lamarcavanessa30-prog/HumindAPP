@@ -12,6 +12,10 @@ import {
   saveConversationModePreference,
   type ConversationModePreference,
 } from "@/domain/conversationPreferences";
+import {
+  composePromptContext,
+  type PromptConversationMessage,
+} from "@/domain/promptComposer";
 import { useThoughts } from "@/domain/ThoughtsProvider";
 
 export const Route = createFileRoute("/_app/chat")({
@@ -192,6 +196,19 @@ function ChatPage() {
   const send = () => {
     if (!input.trim()) return;
     const text = input;
+    const recentConversation: PromptConversationMessage[] = [
+      ...messages.slice(-6).map((message) => ({
+        role: message.from === "me" ? "user" : "assistant",
+        text: message.text,
+      })),
+      { role: "user", text },
+    ];
+    const promptContext = composePromptContext({
+      currentUserMessage: text,
+      recentConversation,
+      conversationMode: modeId,
+    });
+
     addThought({ text, source: "chat", tags: ["Conversazione"] });
     setMessages((m) => [...m, { id: Date.now(), from: "me", text }]);
     setInput("");
@@ -203,9 +220,9 @@ function ChatPage() {
       text,
     ];
     const adaptation =
-      modeId === DEFAULT_CONVERSATION_MODE
+      promptContext.conversationMode === DEFAULT_CONVERSATION_MODE
         ? analyzeConversationDepth({
-            message: text,
+            message: promptContext.currentUserMessage,
             recentUserMessages: recentUserTexts,
             currentDepth: depthId,
           })
