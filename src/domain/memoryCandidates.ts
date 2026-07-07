@@ -4,21 +4,22 @@ import type {
   CognitiveValidationRejectionReason,
   CognitiveValidationResult,
 } from "./cognitiveValidation";
+import type { MemoryCategory, MemoryMetadata, MemoryStatus } from "./memoryContracts";
 
 export type MemoryCandidateSource = "cognitive_validation";
-export type MemoryCandidateStatus = "candidate";
+export type MemoryCandidateStatus = Extract<MemoryStatus, "candidate">;
 
 export type MemoryCandidate = {
   id: string;
   source: MemoryCandidateSource;
-  category: CognitiveCandidateCategory;
+  category: MemoryCategory;
   observedText: string;
   inferredMeaning?: string;
   confidence: CognitiveExtractionConfidence | null;
   createdAt: null;
   status: MemoryCandidateStatus;
   rejectionReason: null;
-  metadata: null;
+  metadata: MemoryMetadata | null;
 };
 
 export type SkippedMemoryCandidate = {
