@@ -20,6 +20,7 @@ import { extractCognitiveCandidates } from "@/domain/cognitiveExtraction";
 import { validateCognitiveExtraction } from "@/domain/cognitiveValidation";
 import { prepareMemoryCandidates } from "@/domain/memoryCandidates";
 import { prepareMemoryReviewGate } from "@/domain/memoryReviewGate";
+import { lookupExistingThoughts } from "@/domain/thoughtLookup";
 import { useThoughts } from "@/domain/ThoughtsProvider";
 
 export const Route = createFileRoute("/_app/chat")({
@@ -216,7 +217,8 @@ function ChatPage() {
     const cognitiveValidation = validateCognitiveExtraction(cognitiveExtraction);
     const memoryCandidates = prepareMemoryCandidates(cognitiveValidation);
     const memoryReviewGate = prepareMemoryReviewGate(memoryCandidates);
-    void memoryReviewGate;
+    const thoughtLookup = lookupExistingThoughts({ reviewGate: memoryReviewGate, thoughts });
+    void thoughtLookup;
 
     addThought({ text, source: "chat", tags: ["Conversazione"] });
     setMessages((m) => [...m, { id: Date.now(), from: "me", text }]);
