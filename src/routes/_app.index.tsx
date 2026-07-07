@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, HelpCircle } from "lucide-react";
+import { createOnboardingState, shouldShowOptionalOnboardingCard } from "@/domain/onboardingState";
 import { useThoughts } from "@/domain/ThoughtsProvider";
 
 export const Route = createFileRoute("/_app/")({
@@ -20,6 +21,8 @@ const livingQuestion = {
 function HomePage() {
   const { thoughts } = useThoughts();
   const recent = thoughts.slice(0, 3);
+  const onboardingState = createOnboardingState();
+  const showOptionalOnboarding = shouldShowOptionalOnboardingCard(onboardingState);
   const today = new Intl.DateTimeFormat("it-IT", {
     weekday: "long",
     day: "numeric",
@@ -46,6 +49,38 @@ function HomePage() {
           </span>
         </Link>
       </section>
+
+      {showOptionalOnboarding && (
+        <section className="mb-16 rounded-3xl border border-border/60 bg-card/70 p-5 md:p-6 shadow-soft">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <div className="text-[11px] uppercase tracking-widest text-muted-foreground">
+                profilo opzionale
+              </div>
+              <h2 className="mt-1 font-display text-2xl text-foreground">
+                Puoi completarlo quando vuoi.
+              </h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                Hu-Mind funziona anche senza configurazione iniziale. Il profilo potra aiutare, piu avanti, a rendere la tua memoria narrativa piu ordinata.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                to="/profilo"
+                className="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-soft hover:opacity-90 transition"
+              >
+                Vai al profilo
+              </Link>
+              <Link
+                to="/chat"
+                className="inline-flex items-center justify-center rounded-xl border border-border/60 bg-background px-4 py-2 text-sm text-foreground hover:bg-muted transition"
+              >
+                Inizia a scrivere
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Domanda Viva — cuore della Home */}
       <section className="mb-16">
