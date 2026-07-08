@@ -6,6 +6,7 @@ import { validateCognitiveExtraction } from "./cognitiveValidation";
 import { prepareMemoryCandidates } from "./memoryCandidates";
 import { evaluateMemoryEligibility } from "./memoryEligibility";
 import { prepareMemoryIntakeDrafts } from "./memoryIntakeDraft";
+import { prepareMemoryPersistencePlan } from "./memoryPersistencePlan";
 import { prepareMemoryRepositoryInputs } from "./memoryRepositoryInput";
 import { createMemoryRecords } from "./memoryRecordFactory";
 import { prepareMemoryReviewGate } from "./memoryReviewGate";
@@ -68,6 +69,9 @@ export const memoryStorageRequestFixture =
 export const memoryRepositoryInputFixture =
   prepareMemoryRepositoryInputs(memoryStorageRequestFixture);
 
+export const memoryPersistencePlanFixture =
+  prepareMemoryPersistencePlan(memoryRepositoryInputFixture);
+
 export const conversationPipelineFixture = runConversationPipeline({
   currentUserMessage: promptComposerFixture.currentUserMessage,
   recentMessages: promptComposerFixture.recentConversation,
@@ -89,6 +93,7 @@ export const cognitivePipelineBoundaryFixture = {
   memoryStorageDecision: memoryStorageDecisionFixture,
   memoryStorageRequest: memoryStorageRequestFixture,
   memoryRepositoryInput: memoryRepositoryInputFixture,
+  memoryPersistencePlan: memoryPersistencePlanFixture,
 };
 
 export const cognitivePipelineExpectedFixture = {
@@ -104,4 +109,5 @@ export const cognitivePipelineExpectedFixture = {
   memoryStorageDecisionCount: 0,
   memoryStorageRequestCount: 0,
   memoryRepositoryInputCount: 0,
+  memoryPersistencePlanCount: 0,
 };

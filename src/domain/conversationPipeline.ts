@@ -8,6 +8,10 @@ import {
   prepareMemoryRepositoryInputs,
   type MemoryRepositoryInputResult,
 } from "./memoryRepositoryInput";
+import {
+  prepareMemoryPersistencePlan,
+  type MemoryPersistencePlanResult,
+} from "./memoryPersistencePlan";
 import { createMemoryRecords, type MemoryRecordFactoryResult } from "./memoryRecordFactory";
 import { prepareMemoryReviewGate, type MemoryReviewGateResult } from "./memoryReviewGate";
 import { decideMemoryStorage, type MemoryStorageDecisionResult } from "./memoryStorageDecision";
@@ -41,6 +45,7 @@ export type ConversationPipelineResult = {
   memoryStorageDecision: MemoryStorageDecisionResult;
   memoryStorageRequest: MemoryStorageRequestResult;
   memoryRepositoryInput: MemoryRepositoryInputResult;
+  memoryPersistencePlan: MemoryPersistencePlanResult;
 };
 
 export function runConversationPipeline(input: ConversationPipelineInput): ConversationPipelineResult {
@@ -60,6 +65,7 @@ export function runConversationPipeline(input: ConversationPipelineInput): Conve
   const memoryStorageDecision = decideMemoryStorage(memoryRecordFactory);
   const memoryStorageRequest = prepareMemoryStorageRequests(memoryStorageDecision);
   const memoryRepositoryInput = prepareMemoryRepositoryInputs(memoryStorageRequest);
+  const memoryPersistencePlan = prepareMemoryPersistencePlan(memoryRepositoryInput);
 
   return {
     promptContext,
@@ -74,5 +80,6 @@ export function runConversationPipeline(input: ConversationPipelineInput): Conve
     memoryStorageDecision,
     memoryStorageRequest,
     memoryRepositoryInput,
+    memoryPersistencePlan,
   };
 }
