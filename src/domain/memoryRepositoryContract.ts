@@ -7,6 +7,7 @@ export type MemoryRepositoryOperation = "save_memory_record";
 
 export type MemoryRepositorySaveStatus =
   | "saved"
+  | "noop"
   | "skipped"
   | "failed";
 
