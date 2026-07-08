@@ -7,6 +7,10 @@ import { prepareMemoryIntakeDrafts, type MemoryIntakeDraftResult } from "./memor
 import { createMemoryRecords, type MemoryRecordFactoryResult } from "./memoryRecordFactory";
 import { prepareMemoryReviewGate, type MemoryReviewGateResult } from "./memoryReviewGate";
 import { decideMemoryStorage, type MemoryStorageDecisionResult } from "./memoryStorageDecision";
+import {
+  prepareMemoryStorageRequests,
+  type MemoryStorageRequestResult,
+} from "./memoryStorageRequest";
 import { composePromptContext, type PromptContext, type PromptConversationMessage } from "./promptComposer";
 import { lookupExistingThoughts, type ThoughtLookupResult } from "./thoughtLookup";
 import type { Thought } from "./thoughts";
@@ -31,6 +35,7 @@ export type ConversationPipelineResult = {
   memoryEligibility: MemoryEligibilityResult;
   memoryRecordFactory: MemoryRecordFactoryResult;
   memoryStorageDecision: MemoryStorageDecisionResult;
+  memoryStorageRequest: MemoryStorageRequestResult;
 };
 
 export function runConversationPipeline(input: ConversationPipelineInput): ConversationPipelineResult {
@@ -48,6 +53,7 @@ export function runConversationPipeline(input: ConversationPipelineInput): Conve
   const memoryEligibility = evaluateMemoryEligibility(memoryIntakeDraft);
   const memoryRecordFactory = createMemoryRecords(memoryEligibility);
   const memoryStorageDecision = decideMemoryStorage(memoryRecordFactory);
+  const memoryStorageRequest = prepareMemoryStorageRequests(memoryStorageDecision);
 
   return {
     promptContext,
@@ -60,5 +66,6 @@ export function runConversationPipeline(input: ConversationPipelineInput): Conve
     memoryEligibility,
     memoryRecordFactory,
     memoryStorageDecision,
+    memoryStorageRequest,
   };
 }
