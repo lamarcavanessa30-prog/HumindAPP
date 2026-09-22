@@ -18,6 +18,7 @@ import { Route as AppMappaRouteImport } from './routes/_app.mappa'
 import { Route as AppKnowledgeRouteImport } from './routes/_app.knowledge'
 import { Route as AppInsightRouteImport } from './routes/_app.insight'
 import { Route as AppFrameworkRouteImport } from './routes/_app.framework'
+import { Route as AppDreamLabRouteImport } from './routes/_app.dream-lab'
 import { Route as AppDiarioRouteImport } from './routes/_app.diario'
 import { Route as AppChatRouteImport } from './routes/_app.chat'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -68,6 +69,11 @@ const AppFrameworkRoute = AppFrameworkRouteImport.update({
   path: '/framework',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDreamLabRoute = AppDreamLabRouteImport.update({
+  id: '/dream-lab',
+  path: '/dream-lab',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDiarioRoute = AppDiarioRouteImport.update({
   id: '/diario',
   path: '/diario',
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/chat': typeof AppChatRoute
   '/diario': typeof AppDiarioRoute
+  '/dream-lab': typeof AppDreamLabRoute
   '/framework': typeof AppFrameworkRoute
   '/insight': typeof AppInsightRoute
   '/knowledge': typeof AppKnowledgeRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/chat': typeof AppChatRoute
   '/diario': typeof AppDiarioRoute
+  '/dream-lab': typeof AppDreamLabRoute
   '/framework': typeof AppFrameworkRoute
   '/insight': typeof AppInsightRoute
   '/knowledge': typeof AppKnowledgeRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_app/chat': typeof AppChatRoute
   '/_app/diario': typeof AppDiarioRoute
+  '/_app/dream-lab': typeof AppDreamLabRoute
   '/_app/framework': typeof AppFrameworkRoute
   '/_app/insight': typeof AppInsightRoute
   '/_app/knowledge': typeof AppKnowledgeRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/chat'
     | '/diario'
+    | '/dream-lab'
     | '/framework'
     | '/insight'
     | '/knowledge'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/chat'
     | '/diario'
+    | '/dream-lab'
     | '/framework'
     | '/insight'
     | '/knowledge'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/_app/chat'
     | '/_app/diario'
+    | '/_app/dream-lab'
     | '/_app/framework'
     | '/_app/insight'
     | '/_app/knowledge'
@@ -266,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFrameworkRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/dream-lab': {
+      id: '/_app/dream-lab'
+      path: '/dream-lab'
+      fullPath: '/dream-lab'
+      preLoaderRoute: typeof AppDreamLabRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/diario': {
       id: '/_app/diario'
       path: '/diario'
@@ -307,6 +326,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppChatRoute: typeof AppChatRoute
   AppDiarioRoute: typeof AppDiarioRoute
+  AppDreamLabRoute: typeof AppDreamLabRoute
   AppFrameworkRoute: typeof AppFrameworkRoute
   AppInsightRoute: typeof AppInsightRoute
   AppKnowledgeRoute: typeof AppKnowledgeRoute
@@ -319,6 +339,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppChatRoute: AppChatRoute,
   AppDiarioRoute: AppDiarioRoute,
+  AppDreamLabRoute: AppDreamLabRoute,
   AppFrameworkRoute: AppFrameworkRoute,
   AppInsightRoute: AppInsightRoute,
   AppKnowledgeRoute: AppKnowledgeRoute,

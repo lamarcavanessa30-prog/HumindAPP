@@ -1,155 +1,102 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Home, MessageCircle, Network, BookOpen, User, Plus, Sparkles, Search, LineChart, BookMarked, Wind, Library } from "lucide-react";
+import { BookMarked, BookOpen, Home, Library, LineChart, Menu, MessageCircle, MoonStar, Network, Plus, Sparkles, User, Wind, X } from "lucide-react";
 import { useState } from "react";
 import { useThoughts } from "@/domain/ThoughtsProvider";
+import { Button } from "@/components/ui/button";
 
-const nav = [
+const primaryNav = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/chat", label: "Chat", icon: MessageCircle },
-  { to: "/mappa", label: "Mappa", icon: Network },
+  { to: "/chat", label: "Conversazione", icon: MessageCircle },
   { to: "/diario", label: "Diario", icon: BookOpen },
-  { to: "/pause", label: "Pause Guidate", icon: Wind },
-  { to: "/insight", label: "Insight", icon: LineChart },
+  { to: "/insight", label: "Insight / Report", icon: LineChart },
+  { to: "/profilo", label: "Profilo", icon: User },
+] as const;
+
+const secondaryNav = [
+  { to: "/pause", label: "Pause", icon: Wind },
+  { to: "/mappa", label: "Mappa", icon: Network },
   { to: "/framework", label: "Framework", icon: BookMarked },
   { to: "/knowledge", label: "Knowledge", icon: Library },
-  { to: "/profilo", label: "Profilo", icon: User },
+  { to: "/dream-lab", label: "Dream Lab", icon: MoonStar, badge: "WIP" },
 ] as const;
 
 export function AppShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { addThought } = useThoughts();
-  const [open, setOpen] = useState(false);
+  const [captureOpen, setCaptureOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [thought, setThought] = useState("");
   const [tag, setTag] = useState("Riflessione");
 
   const saveThought = () => {
     const saved = addThought({ text: thought, source: "capture", tags: [tag] });
     if (!saved) return;
-
     setThought("");
     setTag("Riflessione");
-    setOpen(false);
+    setCaptureOpen(false);
+  };
+
+  const navLink = ({ to, label, icon: Icon, badge }: { to: string; label: string; icon: typeof Home; badge?: string }) => {
+    const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
+    return (
+      <Link key={to} to={to} onClick={() => setMobileOpen(false)} className={`app-nav-link ${active ? "app-nav-active" : ""}`}>
+        <Icon className="size-4" strokeWidth={1.5} />
+        <span>{label}</span>
+        {badge && <span className="ml-auto text-[9px] uppercase tracking-[0.12em] text-primary/70">{badge}</span>}
+      </Link>
+    );
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <aside className="hidden md:flex w-64 shrink-0 flex-col gap-2 p-6 border-r border-border/60 glass sticky top-0 h-screen">
-        <div className="flex items-center gap-2 mb-8">
-          <div className="size-9 rounded-xl bg-primary text-primary-foreground grid place-items-center shadow-soft">
-            <Sparkles className="size-4" />
-          </div>
-          <div>
-            <div className="font-display text-xl leading-none">Hu-Mind</div>
-            <div className="text-[11px] tracking-wide uppercase text-muted-foreground mt-1">le connessioni della tua storia</div>
-          </div>
-        </div>
-
-        <div className="relative mb-4">
-          <Search className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-          <input
-            placeholder="Cerca un pensiero…"
-            className="w-full bg-muted/60 rounded-lg pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring/40 transition"
-          />
-        </div>
-
-        <nav className="flex flex-col gap-1">
-          {nav.map(({ to, label, icon: Icon }) => {
-            const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
-            return (
-              <Link
-                key={to}
-                to={to}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
-                  active
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-foreground/70 hover:bg-muted/70 hover:text-foreground"
-                }`}
-              >
-                <Icon className="size-4" />
-                {label}
-                {active && <span className="ml-auto size-1.5 rounded-full bg-primary animate-pulse-soft" />}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="mt-auto p-4 rounded-xl bg-secondary/60 border border-border/60">
-          <div className="text-xs text-muted-foreground mb-1">Oggi</div>
-          <div className="font-display text-lg leading-snug">"Ogni pensiero conservato è un passo verso una storia più leggibile."</div>
-        </div>
+    <div className="min-h-screen md:flex">
+      <aside className="app-sidebar hidden h-screen w-56 shrink-0 flex-col border-r border-border/60 px-5 py-7 md:sticky md:top-0 md:flex">
+        <Link to="/" className="flex items-center gap-3 px-2">
+          <span className="grid size-8 place-items-center rounded-full bg-primary text-primary-foreground"><Sparkles className="size-3.5" /></span>
+          <span className="font-display text-2xl">HuMind</span>
+        </Link>
+        <nav className="mt-14 space-y-1">{primaryNav.map(navLink)}</nav>
+        <div className="my-7 border-t border-border/60" />
+        <p className="px-3 text-[9px] font-medium uppercase tracking-[0.16em] text-muted-foreground/70">Altri spazi</p>
+        <nav className="mt-3 space-y-0.5">{secondaryNav.map(navLink)}</nav>
+        <p className="mt-auto px-3 font-display text-base leading-snug text-foreground/50">Le connessioni della tua storia.</p>
       </aside>
 
-      {/* Main */}
-      <main className="flex-1 min-w-0">
-        <Outlet />
-      </main>
+      <header className="app-mobile-header fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-border/60 px-5 py-4 md:hidden">
+        <Link to="/" className="font-display text-2xl">HuMind</Link>
+        <Button variant="ghost" size="icon" aria-label={mobileOpen ? "Chiudi navigazione" : "Apri navigazione"} onClick={() => setMobileOpen((value) => !value)}>
+          {mobileOpen ? <X /> : <Menu />}
+        </Button>
+      </header>
 
-      {/* Mobile bottom nav */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 glass border-t border-border/60 px-2 py-2 flex justify-around">
-        {nav.map(({ to, label, icon: Icon }) => {
-          const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
-          return (
-            <Link key={to} to={to} className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg text-[10px] ${active ? "text-primary" : "text-muted-foreground"}`}>
-              <Icon className="size-5" />
-              {label}
-            </Link>
-          );
-        })}
-      </nav>
+      {mobileOpen && (
+        <div className="fixed inset-0 z-40 bg-background px-5 pb-10 pt-24 md:hidden">
+          <nav className="space-y-2">{primaryNav.map(navLink)}</nav>
+          <div className="my-6 border-t border-border" />
+          <nav className="space-y-1">{secondaryNav.map(navLink)}</nav>
+        </div>
+      )}
 
-      {/* Floating capture button */}
-      <button
-        onClick={() => setOpen(true)}
-        className="fixed bottom-20 md:bottom-8 right-6 z-50 group flex items-center gap-2 pl-4 pr-5 py-3.5 rounded-full bg-primary text-primary-foreground shadow-float hover:scale-[1.03] active:scale-95 transition-transform"
-      >
-        <span className="size-5 grid place-items-center rounded-full bg-primary-foreground/20">
-          <Plus className="size-3.5" />
-        </span>
-        <span className="text-sm font-medium tracking-tight">Cattura un pensiero</span>
-      </button>
+      <main className="min-w-0 flex-1 pt-16 md:pt-0"><Outlet /></main>
 
-      {/* Capture modal */}
-      {open && (
-        <div className="fixed inset-0 z-[60] grid place-items-center p-4 bg-anthracite/40 backdrop-blur-sm" onClick={() => setOpen(false)}>
-          <div onClick={(e) => e.stopPropagation()} className="w-full max-w-xl glass rounded-3xl shadow-float p-6 md:p-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="size-4 text-primary" />
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">Cattura un pensiero</div>
-            </div>
-            <textarea
-              autoFocus
-              value={thought}
-              onChange={(e) => setThought(e.target.value)}
-              placeholder="Cosa ti attraversa la mente in questo momento?"
-              rows={5}
-              className="w-full bg-transparent text-lg font-display leading-relaxed outline-none resize-none placeholder:text-muted-foreground/60"
-            />
-            <div className="flex flex-wrap gap-2 mt-4">
-              {["Riflessione", "Lettura", "Idea", "Sogno", "Emozione"].map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTag(t)}
-                  className={`text-xs px-3 py-1.5 rounded-full transition ${
-                    tag === t ? "bg-primary text-primary-foreground" : "bg-muted hover:bg-secondary"
-                  }`}
-                >
-                  {t}
-                </button>
+      {pathname !== "/" && pathname !== "/chat" && (
+        <Button onClick={() => setCaptureOpen(true)} className="fixed bottom-6 right-5 z-30 h-12 rounded-full px-5 shadow-float md:bottom-8 md:right-8">
+          <Plus className="size-4" /> Cattura un pensiero
+        </Button>
+      )}
+
+      {captureOpen && (
+        <div className="fixed inset-0 z-[60] grid place-items-center bg-foreground/30 p-4 backdrop-blur-sm" onClick={() => setCaptureOpen(false)}>
+          <div onClick={(event) => event.stopPropagation()} className="w-full max-w-xl bg-card p-6 shadow-float md:p-8">
+            <p className="editorial-kicker">Cattura un pensiero</p>
+            <textarea autoFocus value={thought} onChange={(event) => setThought(event.target.value)} placeholder="Cosa ti attraversa la mente in questo momento?" rows={5} className="mt-6 w-full resize-none bg-transparent font-display text-2xl leading-relaxed outline-none placeholder:text-muted-foreground/60" />
+            <div className="mt-5 flex flex-wrap gap-2">
+              {["Riflessione", "Lettura", "Idea", "Sogno", "Emozione"].map((item) => (
+                <Button key={item} size="sm" variant={tag === item ? "default" : "outline"} onClick={() => setTag(item)}>{item}</Button>
               ))}
             </div>
-            <div className="flex items-center justify-between mt-6 pt-4 border-t border-border/60">
-              <div className="text-xs text-muted-foreground">Salvato in <span className="text-foreground">Diario · oggi</span></div>
-              <div className="flex gap-2">
-                <button onClick={() => setOpen(false)} className="px-4 py-2 rounded-lg text-sm hover:bg-muted">Annulla</button>
-                <button
-                  onClick={saveThought}
-                  disabled={!thought.trim()}
-                  className="px-5 py-2 rounded-lg text-sm bg-primary text-primary-foreground shadow-soft hover:opacity-90 disabled:opacity-40"
-                >
-                  Conserva
-                </button>
-              </div>
+            <div className="mt-7 flex justify-end gap-2 border-t border-border pt-5">
+              <Button variant="ghost" onClick={() => setCaptureOpen(false)}>Annulla</Button>
+              <Button onClick={saveThought} disabled={!thought.trim()}>Conserva</Button>
             </div>
           </div>
         </div>
